@@ -17,12 +17,14 @@ public:
 	// Vector operations
 	double Magnitude()const;
 	Vector3 Normalize()const;
+	Vector3 operator-()const { return Vector3(-x, -y, -z); }
 	Vector3 operator*(double number)const;
 	Vector3 operator-(Vector3 other)const;
 	Vector3 operator+(Vector3 other)const;
+	double operator*(Vector3 other)const;
 	bool operator==(Vector3 other)const;
 	bool operator!=(Vector3 other) const;
-
+	double Cos(Vector3 other)const;
 	// Getters
 	double X()const { return x; }
 	double Y()const { return y; }

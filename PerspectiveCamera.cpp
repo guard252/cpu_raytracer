@@ -19,6 +19,16 @@ PerspectiveCamera::~PerspectiveCamera()
 {
 }
 
+double PerspectiveCamera::CalculateShadow(Ray r, SceneObject* o)
+{
+	Vector3 hitPoint;
+	if (o->Intersects(r, hitPoint) && o != nullptr)
+	{
+		return -r.Direction().Cos(o->GetNormal(hitPoint));
+	}
+	return 0;
+}
+
 void PerspectiveCamera::RayTrace(Bitmap& bmp, std::vector<SceneObject*> scene, Light light)
 {
 	for (int x = 0; x < bmp.Width(); x++)
@@ -26,17 +36,17 @@ void PerspectiveCamera::RayTrace(Bitmap& bmp, std::vector<SceneObject*> scene, L
 		for (int y = 0; y < bmp.Height(); y++)
 		{
 			// Translation from picture coordinates to world 
-
-			Vector2 picCoord(((2.0*x) / bmp.Width() - 1.0) / ((double)bmp.Height()/bmp.Width()), ((-2.0*y) / bmp.Height() + 1.0) / ((double)bmp.Height() / bmp.Width()));
-
+			Vector2 picCoord(((2.0*x) / bmp.Width() - 1.0) / ((double)bmp.Height() / bmp.Width()), ((-2.0*y) / bmp.Height() + 1.0) / ((double)bmp.Height() / bmp.Width()));
+			
 			Ray ray = CastRay(Vector2(picCoord.X(), picCoord.Y()));
 			Vector3 curHitPoint;
 			Vector3 hitPoint;
 			RGBColor hitColor{ 255, 255, 255 };
 			bool hits = false;
-
+			//std::unique_ptr<SceneObject> closestObject;
+			SceneObject* closestObject{};
 			double lenght = INF;
-			for (auto a : scene)
+			for (auto& a : scene)
 			{
 				if (a->Intersects(ray, curHitPoint))
 				{
@@ -47,11 +57,13 @@ void PerspectiveCamera::RayTrace(Bitmap& bmp, std::vector<SceneObject*> scene, L
 						hitPoint = curHitPoint;
 						if (a->GetColor() != nullptr)
 							hitColor = *(a->GetColor());
+						closestObject = a;
+						//closestObject.reset(a);
 					}
 				}
 			}
 
-			bool l = true;
+			double shadingMeasure = CalculateShadow(ray, closestObject/*.get()*/);
 
 			if (hits)
 			{
@@ -71,27 +83,22 @@ void PerspectiveCamera::RayTrace(Bitmap& bmp, std::vector<SceneObject*> scene, L
 							if ((shadowHit - hitPoint).Magnitude() < (light.Position() - hitPoint).Magnitude() &&
 								shadowHit != hitPoint)
 							{
-								l = false;
+								shadingMeasure = 0;
 								break;
 							}
-							else l = true;
 						}
 					}
-					else l = true;
+
 				}
 			}
-			try {
-			//	if(x == 1080 && y == 320)
-				bmp.GetPixel(x, y) = hitColor * l;
-			}
-			catch (std::exception& e)
-			{
-				//goto END;//std::cout << e.what();
-			}
+
+
+			bmp.GetPixel(x, y) = hitColor * shadingMeasure;
+
 
 		}
 	}
-//END:;
+	//END:;
 }
 
 Ray PerspectiveCamera::CastRay(const Vector2& point) const

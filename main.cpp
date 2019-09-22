@@ -9,7 +9,6 @@
 #include "Plane.h"
 #include "PerspectiveCamera.h"
 #include "Light.h"
-#include <cmath>
 
 const int WIDTH = 1920;
 const int HEIGHT = 1080;
@@ -25,7 +24,7 @@ int main()
 
 
 	Light light(Vector3(0,0, 3));
-	Sphere b(Vector3(0, 2, 1), 0.5, &c);
+	Sphere b(Vector3(0, 2, 1), 2, &c);
 	Plane floor{ Vector3(0,-3,0), Vector3(0, 1, 0),  &d };
 	Plane backWall{ Vector3(0,0,0), Vector3(0, 0, 1),  &e };
 	Plane leftWall{ Vector3(-3,0,0), Vector3(1, 0, 0),  &f };

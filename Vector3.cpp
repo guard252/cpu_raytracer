@@ -55,6 +55,11 @@ Vector3 Vector3::operator+(Vector3 other) const
 	return res;
 }
 
+double Vector3::operator*(Vector3 other) const
+{
+	return x*other.x + y*other.y + z*other.z;
+}
+
 bool Vector3::operator==(Vector3 other) const
 {
 	return fabs(x - other.x) < EPS &&
@@ -67,6 +72,11 @@ bool Vector3::operator!=(Vector3 other) const
 	return fabs(x - other.x) > EPS ||
 		fabs(y - other.y) > EPS ||
 		fabs(z - other.z) > EPS;
+}
+
+double Vector3::Cos(Vector3 other)const
+{
+	return  (*this * other) / (Magnitude() * other.Magnitude());
 }
 
 

@@ -27,3 +27,8 @@ bool Plane::Intersects(Ray ray, Vector3 & p)
 	}
 	return false;
 }
+
+Vector3 Plane::GetNormal(Vector3 point)
+{
+	return normal;
+}

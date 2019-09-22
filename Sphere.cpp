@@ -39,3 +39,8 @@ bool Sphere::Intersects(Ray ray, Vector3 & p)
 	return false;
 
 }
+
+Vector3 Sphere::GetNormal(Vector3 point)
+{
+	return point - center;
+}

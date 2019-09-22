@@ -25,5 +25,8 @@ public:
 
 	// Inherited via SceneObject
 	virtual bool Intersects(Ray ray, Vector3 & p) override;
+
+	// Inherited via SceneObject
+	virtual Vector3 GetNormal(Vector3 point) override;
 };
 

@@ -18,7 +18,7 @@ public:
 		color = c;
 	}
 
-
+	virtual Vector3 GetNormal(Vector3 point) = 0;
 	virtual bool Intersects(Ray ray, Vector3& p) = 0;
 };
 
