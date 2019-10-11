@@ -28,5 +28,9 @@ public:
 
 	// Inherited via SceneObject
 	virtual Vector3 GetNormal(Vector3 point) override;
+
+	// Inherited via SceneObject
+	virtual std::string GetType() override;
+
 };
 

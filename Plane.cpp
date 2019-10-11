@@ -32,3 +32,8 @@ Vector3 Plane::GetNormal(Vector3 point)
 {
 	return normal;
 }
+
+std::string Plane::GetType()
+{
+	return std::string("Plane");
+}

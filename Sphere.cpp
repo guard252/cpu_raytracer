@@ -28,13 +28,21 @@ bool Sphere::Intersects(Ray ray, Vector3 & p)
 	double t1, t2;
 	if (Quadratic(a, b, c, t1, t2))
 	{
-		double t = fabs(t1) < fabs(t2) ? t1 : t2;
-		
-		p = ray.Origin() + ray.Direction() * t;
-		if (p != ray.Origin())
-		{
-			return true;
+		double t;
+		if (t1 > t2) std::swap(t1, t2);
+
+		if (t1 < 0) {
+			t1 = t2; // if t0 is negative, use t1 instead 
+			if (t1 < 0) return false; // both t0 and t1 are negative 
 		}
+
+		t = t1;
+		p = ray.Origin() + ray.Direction() * t;
+		if (p == ray.Origin())
+			p = ray.Origin() + ray.Direction() * t2;
+
+		return true;
+
 	}
 	return false;
 
@@ -43,4 +51,9 @@ bool Sphere::Intersects(Ray ray, Vector3 & p)
 Vector3 Sphere::GetNormal(Vector3 point)
 {
 	return point - center;
+}
+
+std::string Sphere::GetType()
+{
+	return std::string("Sphere");
 }

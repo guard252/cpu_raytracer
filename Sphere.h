@@ -2,7 +2,7 @@
 #include "Ray.h"
 #include "SceneObject.h"
 #include "Math.h"
-
+#include <algorithm>
 class Sphere : public SceneObject
 {
 	Vector3 center; 
@@ -25,5 +25,8 @@ public:
 
 	// Inherited via SceneObject
 	virtual Vector3 GetNormal(Vector3 point) override;
+
+	// Inherited via SceneObject
+	virtual std::string GetType() override;
 };
 
