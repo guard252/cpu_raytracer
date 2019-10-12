@@ -23,17 +23,18 @@ protected:
 	Vector3 up;
 	Vector3 right;
 	double height, width;
-		
+
 public:
 	PerspectiveCamera(Vector3 origin, Vector3 target, Vector3 upguide, double fov, double aspectRatio);
 	virtual ~PerspectiveCamera();
 	double CalculateShadow(Ray r, SceneObject* o);
 
-	virtual void RayTrace(Bitmap& bmp, std::vector<SceneObject*> scene, Light l);
-	
+	virtual void RayTrace(Bitmap& bmp, std::vector<SceneObject*> scene, std::vector<Light> lights);
+
 	SceneObject* FindClosestObject(const Ray& ray, Vector3& hitPoint, RGBColor& hitColor, std::vector<SceneObject*> scene);
 
-	double FindShadingMultiplier(Vector3& hitPoint, Light& light, std::vector<SceneObject*> scene, SceneObject* closestObject);
+	double FindShadingMultiplier(Vector3& hitPoint, std::vector<Light> & lights,
+		std::vector<SceneObject*> scene, SceneObject* closestObject);
 
 
 	// Inherited via Camera
