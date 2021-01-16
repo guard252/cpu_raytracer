@@ -6,7 +6,6 @@
 #include "Bitmap.h"
 #include "SceneObject.h"
 #include "Light.h"
-#include "Logger.h"
 #define INF 1* pow(10, sizeof(int) * 8)
 
 #include <iostream>

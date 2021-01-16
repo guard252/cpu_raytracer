@@ -16,7 +16,6 @@ const double PI = 3.14159265358979323846;
 int main()
 {
 	Bitmap bmp(WIDTH, HEIGHT, 24, RGBColor{ 255, 255, 255 });
-	//Plane a( Vector3(0, 0, 0), Vector3(1, 0, 0) );
 	RGBColor c{ 255, 255, 0 };
 	RGBColor d{ 0, 255, 255 };
 	RGBColor e{ 255, 0,  255 };
@@ -35,7 +34,7 @@ int main()
 	scene.push_back(&leftWall);
 
 	PerspectiveCamera camera(Vector3(0, 0, 10), Vector3(0, 0, 0), Vector3(0, 1, 0), PI / 4, (double)HEIGHT / (double)WIDTH);
-	camera.RayTrace(bmp, scene, light);
+	camera.RayTrace(bmp, scene, { light });
 	bmp.Write("Copy.bmp");
 
 
